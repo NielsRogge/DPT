@@ -259,6 +259,9 @@ class ResidualConvUnit_custom(nn.Module):
 
         self.groups = 1
 
+        print("Number of features in conv's: ", features)
+        print("Using batch norm:", self.bn)
+
         self.conv1 = nn.Conv2d(
             features,
             features,
