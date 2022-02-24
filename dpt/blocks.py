@@ -367,7 +367,7 @@ class FeatureFusionBlock_custom(nn.Module):
         """
         output = xs[0]
     
-        print("First elements of x before res conv unit 1:", x[0,:3,:3,:3])
+        print("First elements of x before res conv unit 1:", output[0,:3,:3,:3])
 
         if len(xs) == 2:
             res = self.resConfUnit1(xs[1])
