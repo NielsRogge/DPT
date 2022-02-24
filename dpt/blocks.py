@@ -298,9 +298,12 @@ class ResidualConvUnit_custom(nn.Module):
         """
 
         out = self.activation(x)
+        print("Output after first relu:", out[0,:3,:3,:3])
         out = self.conv1(out)
         if self.bn == True:
             out = self.bn1(out)
+
+        print("Output after first conv:", out[0,:3,:3,:3])
 
         out = self.activation(out)
         out = self.conv2(out)
