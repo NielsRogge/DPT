@@ -94,6 +94,9 @@ class DPT(BaseModel):
         
         out = self.scratch.output_conv(path_1)
 
+        print("Shape of logits:", out.shape)
+        print("First elements of logits:", out[0,0,:3,:3])
+
         return out
 
 
