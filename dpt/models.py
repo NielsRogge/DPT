@@ -87,6 +87,8 @@ class DPT(BaseModel):
         path_2 = self.scratch.refinenet2(path_3, layer_2_rn)
         path_1 = self.scratch.refinenet1(path_2, layer_1_rn)
 
+        print("Shape after fusion:", path_1.shape)
+        
         out = self.scratch.output_conv(path_1)
 
         return out
