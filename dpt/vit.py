@@ -121,7 +121,7 @@ def forward_vit(pretrained, x):
     layer_2 = pretrained.act_postprocess2[0:2](layer_2)
     layer_3 = pretrained.act_postprocess3[0:2](layer_3)
     layer_4 = pretrained.act_postprocess4[0:2](layer_4)
-
+    
     unflatten = nn.Sequential(
         nn.Unflatten(
             2,
@@ -148,6 +148,12 @@ def forward_vit(pretrained, x):
     layer_3 = pretrained.act_postprocess3[3 : len(pretrained.act_postprocess3)](layer_3)
     layer_4 = pretrained.act_postprocess4[3 : len(pretrained.act_postprocess4)](layer_4)
 
+    print("After postprocessing:")
+    print(layer_1.shape)
+    print(layer_2.shape)
+    print(layer_3.shape)
+    print(layer_4.shape)
+    
     return layer_1, layer_2, layer_3, layer_4
 
 
