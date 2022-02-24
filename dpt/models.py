@@ -83,6 +83,8 @@ class DPT(BaseModel):
         print("Layer 4:", layer_4_rn[0,:3,:3,:3])
 
         path_4 = self.scratch.refinenet4(layer_4_rn)
+        print("First elements after first fusion:", path_4[0,:3,:3,:3])
+
         path_3 = self.scratch.refinenet3(path_4, layer_3_rn)
         path_2 = self.scratch.refinenet2(path_3, layer_2_rn)
         path_1 = self.scratch.refinenet1(path_2, layer_1_rn)
