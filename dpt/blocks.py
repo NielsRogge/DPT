@@ -378,10 +378,16 @@ class FeatureFusionBlock_custom(nn.Module):
         
         output = self.resConfUnit2(output)
 
+        print("First elements of x after res conv unit 2:", output[0,:3,:3,:3])
+
         output = nn.functional.interpolate(
             output, scale_factor=2, mode="bilinear", align_corners=self.align_corners
         )
 
+        print("First elements of x after interpolation:", output[0,:3,:3,:3])
+
         output = self.out_conv(output)
+
+        print("First elements of x after projection:", output[0,:3,:3,:3])
 
         return output
