@@ -8,11 +8,11 @@ import argparse
 
 import util.io
 
-from torchvision.transforms import Compose, Resize, ToTensor, Normalize
-
 from dpt.models import DPTDepthModel
 from dpt.midas_net import MidasNet_large
-from dpt.transforms import Resize, NormalizeImage, PrepareForNet
+from dpt.transforms import NormalizeImage, PrepareForNet
+
+from torchvision.transforms import Compose, Resize, ToTensor, Normalize
 
 #from util.misc import visualize_attention
 
