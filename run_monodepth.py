@@ -13,6 +13,8 @@ from dpt.midas_net import MidasNet_large
 from dpt.transforms import NormalizeImage, PrepareForNet
 
 from torchvision.transforms import Compose, Resize, ToTensor, Normalize
+import requests
+from PIL import Image
 
 #from util.misc import visualize_attention
 
@@ -151,7 +153,8 @@ def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=T
         with torch.no_grad():
             #sample = torch.from_numpy(img_input).to(device).unsqueeze(0)
 
-            img = Image.open(img_name)
+            url = 'http://images.cocodataset.org/val2017/000000039769.jpg'
+            img = Image.open(requests.get(url, stream=True).raw)
             sample = transform(img).to(device).unsqueeze(0)
 
             print("Pixel values:", sample)
