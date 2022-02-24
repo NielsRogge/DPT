@@ -144,17 +144,17 @@ def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=T
             top = height - 352
             left = (width - 1216) // 2
             img = img[top : top + 352, left : left + 1216, :]
-
-
-        img_input = transform(img)
+        
         #img_input = transform({"image": img})["image"]
 
         print("Pixel values:", img_input)
 
         # compute
         with torch.no_grad():
-            sample = torch.from_numpy(img_input).to(device).unsqueeze(0)
+            #sample = torch.from_numpy(img_input).to(device).unsqueeze(0)
 
+            sample = transform(img_name).to(device).unsqueeze(0)
+        
             if optimize == True and device == torch.device("cuda"):
                 sample = sample.to(memory_format=torch.channels_last)
                 sample = sample.half()
