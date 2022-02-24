@@ -149,10 +149,10 @@ def forward_vit(pretrained, x):
     layer_4 = pretrained.act_postprocess4[3 : len(pretrained.act_postprocess4)](layer_4)
 
     print("After postprocessing:")
-    print(layer_1.shape)
-    print(layer_2.shape)
-    print(layer_3.shape)
-    print(layer_4.shape)
+    print("Layer 1:", layer_1[0,:3,:3,:3])
+    print("Layer 2:", layer_2[0,:3,:3,:3])
+    print("Layer 3:", layer_3[0,:3,:3,:3])
+    print("Layer 4:", layer_4[0,:3,:3,:3])
     
     return layer_1, layer_2, layer_3, layer_4
 
