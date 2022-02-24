@@ -307,7 +307,7 @@ class ResidualConvUnit_custom(nn.Module):
             print("we are here")
             out = self.bn1(out)
 
-        print("Kernel of conv1:", self.conv1.data.weight])
+        print("Kernel of conv1:", self.conv1.weight])
         
         print("Output after first conv:", out[0,:3,:3,:3])
 
