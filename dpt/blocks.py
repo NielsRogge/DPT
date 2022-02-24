@@ -307,6 +307,8 @@ class ResidualConvUnit_custom(nn.Module):
         if self.bn == True:
             out = self.bn2(out)
 
+        print("Output after 2 convs and 2 relu's:", out[0,:3,:3,:3])
+        
         if self.groups > 1:
             out = self.conv_merge(out)
 
