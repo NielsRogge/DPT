@@ -366,12 +366,16 @@ class FeatureFusionBlock_custom(nn.Module):
             tensor: output
         """
         output = xs[0]
+    
+        print("Shape of x:", output.shape)
 
         if len(xs) == 2:
             res = self.resConfUnit1(xs[1])
             output = self.skip_add.add(output, res)
             # output += res
 
+        print("Shape of x before resConfUnit2:", output.shape)
+        
         output = self.resConfUnit2(output)
 
         output = nn.functional.interpolate(
