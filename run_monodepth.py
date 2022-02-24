@@ -151,7 +151,8 @@ def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=T
         with torch.no_grad():
             #sample = torch.from_numpy(img_input).to(device).unsqueeze(0)
 
-            sample = transform(img_name).to(device).unsqueeze(0)
+            img = Image.open(img_name)
+            sample = transform(img).to(device).unsqueeze(0)
 
             print("Pixel values:", sample)
         
