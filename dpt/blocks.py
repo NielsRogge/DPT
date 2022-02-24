@@ -304,8 +304,11 @@ class ResidualConvUnit_custom(nn.Module):
         print("Output after first relu:", out[0,:3,:3,:3])
         out = self.conv1(out)
         if self.bn == True:
+            print("we are here")
             out = self.bn1(out)
 
+        print("Kernel of conv1:", self.conv1.data.weight])
+        
         print("Output after first conv:", out[0,:3,:3,:3])
 
         out = self.activation(out)
