@@ -76,6 +76,12 @@ class DPT(BaseModel):
         layer_3_rn = self.scratch.layer3_rn(layer_3)
         layer_4_rn = self.scratch.layer4_rn(layer_4)
 
+        print("After convs:")
+        print("Layer 1:", layer_1_rn[0,:3,:3,:3])
+        print("Layer 2:", layer_2_rn[0,:3,:3,:3])
+        print("Layer 3:", layer_3_rn[0,:3,:3,:3])
+        print("Layer 4:", layer_4_rn[0,:3,:3,:3])
+
         path_4 = self.scratch.refinenet4(layer_4_rn)
         path_3 = self.scratch.refinenet3(path_4, layer_3_rn)
         path_2 = self.scratch.refinenet2(path_3, layer_2_rn)
