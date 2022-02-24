@@ -167,7 +167,7 @@ def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=T
             prediction = (
                 torch.nn.functional.interpolate(
                     prediction.unsqueeze(1),
-                    size=img.shape[:2],
+                    size=img.size[::-1],
                     mode="bicubic",
                     align_corners=False,
                 )
