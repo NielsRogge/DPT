@@ -145,7 +145,9 @@ def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=T
             left = (width - 1216) // 2
             img = img[top : top + 352, left : left + 1216, :]
 
-        img_input = transform({"image": img})["image"]
+
+        img_input = transform(img)
+        #img_input = transform({"image": img})["image"]
 
         print("Pixel values:", img_input)
 
