@@ -367,14 +367,14 @@ class FeatureFusionBlock_custom(nn.Module):
         """
         output = xs[0]
     
-        print("Shape of x:", output.shape)
+        print("First elements of x before res conv unit 1:", x[0,:3,:3,:3])
 
         if len(xs) == 2:
             res = self.resConfUnit1(xs[1])
             output = self.skip_add.add(output, res)
             # output += res
 
-        print("Shape of x before resConfUnit2:", output.shape)
+        print("First elements of x before res conv unit 2:", output[0,:3,:3,:3])
         
         output = self.resConfUnit2(output)
 
