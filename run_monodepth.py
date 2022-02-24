@@ -8,7 +8,7 @@ import argparse
 
 import util.io
 
-from torchvision.transforms import Compose
+from torchvision.transforms import Compose, Resize, ToTensor, Normalize
 
 from dpt.models import DPTDepthModel
 from dpt.midas_net import MidasNet_large
@@ -92,21 +92,27 @@ def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=T
             False
         ), f"model_type '{model_type}' not implemented, use: --model_type [dpt_large|dpt_hybrid|dpt_hybrid_kitti|dpt_hybrid_nyu|midas_v21]"
 
-    transform = Compose(
-        [
-            Resize(
-                net_w,
-                net_h,
-                resize_target=None,
-                keep_aspect_ratio=True,
-                ensure_multiple_of=32,
-                resize_method="minimal",
-                image_interpolation_method=cv2.INTER_CUBIC,
-            ),
-            normalization,
-            PrepareForNet(),
-        ]
-    )
+    # transform = Compose(
+    #     [
+    #         Resize(
+    #             net_w,
+    #             net_h,
+    #             resize_target=None,
+    #             keep_aspect_ratio=True,
+    #             ensure_multiple_of=32,
+    #             resize_method="minimal",
+    #             image_interpolation_method=cv2.INTER_CUBIC,
+    #         ),
+    #         normalization,
+    #         PrepareForNet(),
+    #     ]
+    # )
+
+    transform = Compose([
+        Resize((net_h, net_w)),
+        ToTensor(),
+        Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]),
+    ])
 
     model.eval()
 
@@ -140,6 +146,8 @@ def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=T
             img = img[top : top + 352, left : left + 1216, :]
 
         img_input = transform({"image": img})["image"]
+
+        print("Pixel values:", img_input)
 
         # compute
         with torch.no_grad():
