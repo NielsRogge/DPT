@@ -111,6 +111,12 @@ def forward_vit(pretrained, x):
     layer_3 = pretrained.activations["3"]
     layer_4 = pretrained.activations["4"]
 
+    print("ViT features:")
+    print(layer_1.shape)
+    print(layer_2.shape)
+    print(layer_3.shape)
+    print(layer_4.shape)
+
     layer_1 = pretrained.act_postprocess1[0:2](layer_1)
     layer_2 = pretrained.act_postprocess2[0:2](layer_2)
     layer_3 = pretrained.act_postprocess3[0:2](layer_3)
