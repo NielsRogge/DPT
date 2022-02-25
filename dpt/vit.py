@@ -312,7 +312,7 @@ def _make_vit_b16_backbone(
 
             return x
 
-    pretrained_act.postprocess1 = CustomLayer(readout_oper, size, features, vit_features)
+    pretrained.act_postprocess1 = CustomLayer(readout_oper, size, features, vit_features)
 
     # pretrained.act_postprocess1 = nn.Sequential(
     #     readout_oper[0],
