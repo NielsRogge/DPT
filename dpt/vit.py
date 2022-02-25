@@ -191,6 +191,10 @@ def forward_flex(self, x):
 
     B = x.shape[0]
 
+    print("Patch size:", self.patch_size)
+    print("Position embedding:", pos_embed.shape)
+    print("First elements of position embedding:", pos_embed[0, :3, :3])
+
     if hasattr(self.patch_embed, "backbone"):
         x = self.patch_embed.backbone(x)
         if isinstance(x, (list, tuple)):
