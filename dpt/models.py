@@ -122,8 +122,8 @@ class DPTDepthModel(DPT):
 
         super().__init__(head, **kwargs)
 
-        # if path is not None:
-        #     self.load(path)
+        if path is not None:
+            self.load(path)
 
     def forward(self, x):
         inv_depth = super().forward(x).squeeze(dim=1)
@@ -163,5 +163,5 @@ class DPTSegmentationModel(DPT):
             nn.Conv2d(features, num_classes, kernel_size=1),
         )
 
-        if path is not None:
-            self.load(path)
+        # if path is not None:
+        #     self.load(path)
