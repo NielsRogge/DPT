@@ -189,7 +189,7 @@ def forward_flex(self, x):
     b, c, h, w = x.shape
 
     print("Cls token:", self.cls_token)
-    print("Patch embeddings", self.patch_embeddings.projection.weight)
+    print("Patch embeddings", self.patch_embed.proj.weight)
     print("Shape of position embeddings:", self.pos_embed.data.shape)
     print("First elements of pos embed:", self.pos_embed[0,:3,:3])
 
