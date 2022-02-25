@@ -156,6 +156,7 @@ def forward_vit(pretrained, x):
     layer_4 = pretrained.act_postprocess4[3 : len(pretrained.act_postprocess4)](layer_4)
 
     print("After postprocessing:")
+    print("Shape of layer 1:", layer_1.shape)
     print("Layer 1:", layer_1[0,:3,:3,:3])
     print("Layer 2:", layer_2[0,:3,:3,:3])
     print("Layer 3:", layer_3[0,:3,:3,:3])
@@ -276,28 +277,65 @@ def _make_vit_b16_backbone(
 
     # 32, 48, 136, 384
     print("SIZE USED in processing layers:", size)
-    pretrained.act_postprocess1 = nn.Sequential(
-        readout_oper[0],
-        Transpose(1, 2),
-        nn.Unflatten(2, torch.Size([size[0] // 16, size[1] // 16])),
-        nn.Conv2d(
-            in_channels=vit_features,
-            out_channels=features[0],
-            kernel_size=1,
-            stride=1,
-            padding=0,
-        ),
-        nn.ConvTranspose2d(
-            in_channels=features[0],
-            out_channels=features[0],
-            kernel_size=4,
-            stride=4,
-            padding=0,
-            bias=True,
-            dilation=1,
-            groups=1,
-        ),
-    )
+
+    class CustomLayer(nn.Module):
+        def __init__(self, readout_oper, size, features, vit_features):
+            super(CustomLayer, self).__init__()
+
+            self.readout_oper = readout_oper[0]
+            self.transpose = Transpose(1, 2)
+            self.unflatten = nn.Unflatten(2, torch.Size([size[0] // 16, size[1] // 16]))
+            self.conv1 =  nn.Conv2d(
+                in_channels=vit_features,
+                out_channels=features[0],
+                kernel_size=1,
+                stride=1,
+                padding=0,
+            )
+            self.conv2 = nn.ConvTranspose2d(
+                in_channels=features[0],
+                out_channels=features[0],
+                kernel_size=4,
+                stride=4,
+                padding=0,
+                bias=True,
+                dilation=1,
+                groups=1,
+            )
+
+        def forward(self, x):
+            x = self.readout_oper(x)
+            x = self.transpose(x)
+            x = self.unflatten(x)
+            x = self.conv1(x)
+            x = self.conv2(x)
+
+            return x
+
+    pretrained_act.postprocess1 = customLayer(readout_oper, size, features, vit_features)
+
+    # pretrained.act_postprocess1 = nn.Sequential(
+    #     readout_oper[0],
+    #     Transpose(1, 2),
+    #     nn.Unflatten(2, torch.Size([size[0] // 16, size[1] // 16])),
+    #     nn.Conv2d(
+    #         in_channels=vit_features,
+    #         out_channels=features[0],
+    #         kernel_size=1,
+    #         stride=1,
+    #         padding=0,
+    #     ),
+    #     nn.ConvTranspose2d(
+    #         in_channels=features[0],
+    #         out_channels=features[0],
+    #         kernel_size=4,
+    #         stride=4,
+    #         padding=0,
+    #         bias=True,
+    #         dilation=1,
+    #         groups=1,
+    #     ),
+    # )
 
     pretrained.act_postprocess2 = nn.Sequential(
         readout_oper[1],

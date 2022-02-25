@@ -122,8 +122,8 @@ class DPTDepthModel(DPT):
 
         super().__init__(head, **kwargs)
 
-        if path is not None:
-            self.load(path)
+        # if path is not None:
+        #     self.load(path)
 
     def forward(self, x):
         inv_depth = super().forward(x).squeeze(dim=1)
