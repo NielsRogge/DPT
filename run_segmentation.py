@@ -17,6 +17,7 @@ from dpt.transforms import NormalizeImage, PrepareForNet
 from torchvision.transforms import Compose, Resize, ToTensor, Normalize
 import requests
 from PIL import Image
+import numpy as np
 
 
 def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=True):
