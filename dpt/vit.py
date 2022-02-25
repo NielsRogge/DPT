@@ -214,7 +214,7 @@ def forward_flex(self, x):
     x = self.pos_drop(x)
 
     print("Embeddings:", x.shape)
-    print("First elements of embeddings:",; x[0,:3,:3])
+    print("First elements of embeddings:", x[0,:3,:3])
 
     for blk in self.blocks:
         x = blk(x)
