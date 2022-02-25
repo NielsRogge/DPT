@@ -111,10 +111,13 @@ def forward_vit(pretrained, x):
     layer_3 = pretrained.activations["3"]
     layer_4 = pretrained.activations["4"]
 
-    print(f"ViT features, of shape {layer_1.shape}")
+    print(f"ViT features layer 1, of shape {layer_1.shape}")
     print("Layer 1:", layer_1[0,:3,:3])
+    print(f"ViT features layer 2, of shape {layer_2.shape}")
     print("Layer 2:", layer_2[0,:3,:3])
+    print(f"ViT features layer 3, of shape {layer_3.shape}")
     print("Layer 3:", layer_3[0,:3,:3])
+    print(f"ViT features layer 4, of shape {layer_4.shape}")
     print("Layer 4:", layer_4[0,:3,:3])
 
     layer_1 = pretrained.act_postprocess1[0:2](layer_1)
@@ -268,6 +271,7 @@ def _make_vit_b16_backbone(
     readout_oper = get_readout_oper(vit_features, features, use_readout, start_index)
 
     # 32, 48, 136, 384
+    print("SIZE USED in processing layers:", size)
     pretrained.act_postprocess1 = nn.Sequential(
         readout_oper[0],
         Transpose(1, 2),
