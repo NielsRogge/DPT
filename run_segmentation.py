@@ -101,6 +101,7 @@ def run(input_path, output_path, model_path, model_type="dpt_hybrid", optimize=T
         #img_input = transform({"image": img})["image"]
 
         url = 'http://images.cocodataset.org/val2017/000000039769.jpg'
+        url = 'https://huggingface.co/datasets/hf-internal-testing/fixtures_ade20k/raw/main/ADE_val_00000001.jpg'
         img = Image.open(requests.get(url, stream=True).raw)
         sample = transform(img).to(device).unsqueeze(0)
 
