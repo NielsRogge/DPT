@@ -84,6 +84,8 @@ class ProjectReadout(nn.Module):
         self.project = nn.Sequential(nn.Linear(2 * in_features, in_features), nn.GELU())
 
     def forward(self, x):
+        print("Shape of features before readout:", x.shape)
+
         readout = x[:, 0].unsqueeze(1).expand_as(x[:, self.start_index :])
         features = torch.cat((x[:, self.start_index :], readout), -1)
 
