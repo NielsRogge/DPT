@@ -166,7 +166,7 @@ def forward_vit(pretrained, x):
 
 
 def _resize_pos_embed(self, posemb, gs_h, gs_w):
-    print("Pos embed inside resize:", posembed[0,:3])
+    print("Pos embed inside resize:", posemb[0,:3])
     print("Start index:", self.start_index)
     
     posemb_tok, posemb_grid = (
