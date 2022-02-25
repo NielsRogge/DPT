@@ -124,7 +124,7 @@ def forward_vit(pretrained, x):
     print(f"ViT features layer 4, of shape {layer_4.shape}")
     print("Layer 4:", layer_4[0,:3,:3])
 
-    layer_1 = pretrained.act_postprocess1[0:2](layer_1)
+    layer_1 = pretrained.act_postprocess1(layer_1)
     layer_2 = pretrained.act_postprocess2[0:2](layer_2)
     layer_3 = pretrained.act_postprocess3[0:2](layer_3)
     layer_4 = pretrained.act_postprocess4[0:2](layer_4)
@@ -285,30 +285,32 @@ def _make_vit_b16_backbone(
             self.readout_oper = readout_oper[0]
             self.transpose = Transpose(1, 2)
             self.unflatten = nn.Unflatten(2, torch.Size([size[0] // 16, size[1] // 16]))
-            self.conv1 =  nn.Conv2d(
-                in_channels=vit_features,
-                out_channels=features[0],
-                kernel_size=1,
-                stride=1,
-                padding=0,
-            )
-            self.conv2 = nn.ConvTranspose2d(
-                in_channels=features[0],
-                out_channels=features[0],
-                kernel_size=4,
-                stride=4,
-                padding=0,
-                bias=True,
-                dilation=1,
-                groups=1,
-            )
+            # self.conv1 =  nn.Conv2d(
+            #     in_channels=vit_features,
+            #     out_channels=features[0],
+            #     kernel_size=1,
+            #     stride=1,
+            #     padding=0,
+            # )
+            # self.conv2 = nn.ConvTranspose2d(
+            #     in_channels=features[0],
+            #     out_channels=features[0],
+            #     kernel_size=4,
+            #     stride=4,
+            #     padding=0,
+            #     bias=True,
+            #     dilation=1,
+            #     groups=1,
+            # )
 
         def forward(self, x):
             x = self.readout_oper(x)
+            print("Shape of x after readout:", x.shape)
             x = self.transpose(x)
             x = self.unflatten(x)
-            x = self.conv1(x)
-            x = self.conv2(x)
+            print("Shape of x after unflatten:", x.shape)
+            # x = self.conv1(x)
+            # x = self.conv2(x)
 
             return x
 
