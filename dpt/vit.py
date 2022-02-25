@@ -87,6 +87,8 @@ class ProjectReadout(nn.Module):
         readout = x[:, 0].unsqueeze(1).expand_as(x[:, self.start_index :])
         features = torch.cat((x[:, self.start_index :], readout), -1)
 
+        print("Shape of features after readout:", features.shape)
+        
         return self.project(features)
 
 
