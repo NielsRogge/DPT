@@ -188,6 +188,11 @@ def _resize_pos_embed(self, posemb, gs_h, gs_w):
 def forward_flex(self, x):
     b, c, h, w = x.shape
 
+    print("Cls token:", self.cls_token)
+    print("Patch embeddings", self.patch_embeddings.projection.weight)
+    print("Shape of position embeddings:", self.pos_embed.data.shape)
+    print("First elements of pos embed:", self.pos_embed[0,:3,:3])
+
     pos_embed = self._resize_pos_embed(
         self.pos_embed, h // self.patch_size[1], w // self.patch_size[0]
     )
