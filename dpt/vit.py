@@ -276,13 +276,19 @@ def _make_vit_b16_backbone(
 
     readout_oper = get_readout_oper(vit_features, features, use_readout, start_index)
 
-    class PrintLayer(nn.Module):
-        def __init__(self):
-            super(PrintLayer, self).__init__()
+    class UnflattenLayer(nn.Module):
+        def __init__(self, size):
+            super(UnflattenLayer, self).__init__()
+
+            self.size = size
         
         def forward(self, x):
+            a = nn.Unflatten(2, torch.Size([self.size[0] // 16, self.size[1] // 16]))
+            
             # Do your print / debug stuff here
-            print("Shape of x:", x.shape)
+            print("Shape of x before unflatten:", x.shape)
+            x = a(x)
+            print("Shape of x after unflatten:", x.shape)
             return x
     
     # 32, 48, 136, 384
@@ -290,7 +296,8 @@ def _make_vit_b16_backbone(
     pretrained.act_postprocess1 = nn.Sequential(
         readout_oper[0],
         Transpose(1, 2),
-        nn.Unflatten(2, torch.Size([size[0] // 16, size[1] // 16])),
+        UnflattenLayer(size=size)
+        #nn.Unflatten(2, torch.Size([size[0] // 16, size[1] // 16])),
         nn.Conv2d(
             in_channels=vit_features,
             out_channels=features[0],
