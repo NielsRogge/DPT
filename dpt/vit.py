@@ -280,6 +280,7 @@ def _make_vit_b16_backbone(
         def __init__(self, size):
             super(UnflattenLayer, self).__init__()
 
+            print("Initializing UnflattenLayer")
             self.size = size
         
         def forward(self, x):
