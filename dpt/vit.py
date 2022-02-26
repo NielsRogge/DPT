@@ -296,7 +296,7 @@ def _make_vit_b16_backbone(
     pretrained.act_postprocess1 = nn.Sequential(
         readout_oper[0],
         Transpose(1, 2),
-        UnflattenLayer(size=size)
+        UnflattenLayer(size=size),
         #nn.Unflatten(2, torch.Size([size[0] // 16, size[1] // 16])),
         nn.Conv2d(
             in_channels=vit_features,
