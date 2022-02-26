@@ -287,11 +287,8 @@ def _make_vit_b16_backbone(
     print("SIZE USED in processing layers:", size)
     pretrained.act_postprocess1 = nn.Sequential(
         readout_oper[0],
-        PrintLayer(),
         Transpose(1, 2),
-        PrintLayer(),
         nn.Unflatten(2, torch.Size([size[0] // 16, size[1] // 16])),
-        PrintLayer(),
         nn.Conv2d(
             in_channels=vit_features,
             out_channels=features[0],
