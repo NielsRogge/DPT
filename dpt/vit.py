@@ -274,12 +274,24 @@ def _make_vit_b16_backbone(
 
     readout_oper = get_readout_oper(vit_features, features, use_readout, start_index)
 
+    class PrintLayer(nn.Module):
+        def __init__(self):
+            super(PrintLayer, self).__init__()
+        
+        def forward(self, x):
+            # Do your print / debug stuff here
+            print("Shape of x:", x.shape)
+            return x
+    
     # 32, 48, 136, 384
     print("SIZE USED in processing layers:", size)
     pretrained.act_postprocess1 = nn.Sequential(
         readout_oper[0],
+        PrintLayer(),
         Transpose(1, 2),
+        PrintLayer(),
         nn.Unflatten(2, torch.Size([size[0] // 16, size[1] // 16])),
+        PrintLayer(),
         nn.Conv2d(
             in_channels=vit_features,
             out_channels=features[0],
