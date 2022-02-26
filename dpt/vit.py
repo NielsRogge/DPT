@@ -101,7 +101,9 @@ class Transpose(nn.Module):
         self.dim1 = dim1
 
     def forward(self, x):
+        print("Shape of x before transposing:", x.shape)
         x = x.transpose(self.dim0, self.dim1)
+        print("Shape of x after transposing:", x.shape)
         return x
 
 
